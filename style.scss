@@ -1,0 +1,71 @@
+$primary-color: #0b56b1;
+$completed-bg: #9bbde1;
+$border-color: #ccc;
+$font-stack: Arial, sans-serif;
+
+body {
+  font-family: $font-stack;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background-color: #9cc6e2;
+  color: #333;
+}
+
+h1, h2 {
+  color: $primary-color;
+}
+
+input, button {
+  padding: 8px;
+  margin: 5px 0;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+input[type="text"], input[type="number"] {
+  border: 1px solid #bbb;
+  width: calc(100% - 20px);
+}
+
+button {
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.habit {
+  border: 1px solid $border-color;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: white;
+  transition: background 0.3s ease;
+
+  &.completed {
+    background-color: $completed-bg;
+  }
+
+  strong {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  button {
+    margin-top: 5px;
+    margin-right: 5px;
+  }
+}
+
+#summary {
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}

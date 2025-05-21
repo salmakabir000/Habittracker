@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Habit Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1>Habit Tracker</h1>
+
+    Form to Add Habit
+  <div>
+    <input id="habitName" type="text" placeholder="Habit Name">
+    <input id="habitGoal" type="number" placeholder="Goal Days">
+    <button onclick="addHabit()">Add Habit</button>
+  </div>
+
+  <h2>Your Habits</h2>
+
+      Filter Buttons 
+  <div>
+    <button onclick="filterHabits('all')">Show All</button>
+    <button onclick="filterHabits('completed')">Show Completed</button>
+    <button onclick="filterHabits('in-progress')">Show In-Progress</button>
+  </div>
+
+  <div id="habitList"></div>
+
+  <h2>Progress Summary</h2>
+  <div id="summary"></div>
+
+  <script>
+    // Variables to store habit data and current filter
+    let habits = [];                  // Array of habit objects
+    let currentFilter = 'all';        // Track current filter selection
+
+    // ES6 Arrow function
+    const addHabit = () => {
+      // Get input values
+      const nameInput = document.getElementById('habitName');
+      const goalInput = document.getElementById('habitGoal');
+
+      const name = nameInput.value.trim();
+      const goal = parseInt(goalInput.value.trim());
+
+      if (!name || !goal) return alert("Please enter a habit and goal");
+
+      // Using object and let/const
+      const newHabit = {
+        id: Date.now(),               // unique ID
+        name,
+        goal,
+        completedDays: 0
+      };
+
+      // Array.push to add new object
+      habits.push(newHabit);
+
+      // Clear inputs
+      nameInput.value = "";
+      goalInput.value = "";
+
+      renderHabits();
+    };
+
+    // Using map to update a habit
+    const completeHabit = (id) => {
+      habits = habits.map(habit =>
+        habit.id === id
+          ? { ...habit, completedDays: habit.completedDays + 1 }  
+          : habit
+      );
+      renderHabits();
+    };
+
+    // Using findIndex and splice to delete a habit
+    const deleteHabit = (id) => {
+      const index = habits.findIndex(habit => habit.id === id);
+      if (index !== -1) {
+        habits.splice(index, 1);   // splice to remove item from array
+        renderHabits();
+      }
+    };
+
+    // Filter function to set current filter
+    const filterHabits = (type) => {
+      currentFilter = type;
+      renderHabits();
+    };
+
+    // Main render function
+    const renderHabits = () => {
+      const list = document.getElementById('habitList');
+      list.innerHTML = '';
+
+      // Using filter to apply current filter to habits array
+      let filteredHabits = habits;
+
+      if (currentFilter === 'completed') {
+        filteredHabits = habits.filter(h => h.completedDays >= h.goal);
+      } else if (currentFilter === 'in-progress') {
+        filteredHabits = habits.filter(h => h.completedDays < h.goal);
+      }
+
+      // Using forEach to display each habit
+      filteredHabits.forEach(habit => {
+        const habitDiv = document.createElement('div');
+        habitDiv.className = 'habit';
+        if (habit.completedDays >= habit.goal) {
+          habitDiv.classList.add('completed');
+        }
+
+        habitDiv.innerHTML = `
+          <strong>${habit.name}</strong><br>
+          Goal: ${habit.goal} days <br>
+          Completed: ${habit.completedDays} days <br>
+          <button onclick="completeHabit(${habit.id})">Mark Day Complete</button>
+          <button onclick="deleteHabit(${habit.id})">Delete</button>
+        `;
+
+        list.appendChild(habitDiv);
+      });
+
+      renderSummary();
+    };
+
+    // Using reduce to calculate total completed days
+    const renderSummary = () => {
+      const summary = document.getElementById('summary');
+      const completed = habits.filter(h => h.completedDays >= h.goal).length;
+
+      summary.innerHTML = `
+        Habits fully completed: ${completed} / ${habits.length}
+      `;
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background-color: #9cc6e2;
+  color: #333;
+}
+
+h1, h2 {
+  color: #0b56b1;
+}
+
+input, button {
+  padding: 8px;
+  margin: 5px 0;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+input[type=text], input[type=number] {
+  border: 1px solid #bbb;
+  width: calc(100% - 20px);
+}
+
+button {
+  background-color: #0b56b1;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: rgb(8.0159574468, 62.670212766, 128.9840425532);
+}
+
+.habit {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: white;
+  transition: background 0.3s ease;
+}
+.habit.completed {
+  background-color: #9bbde1;
+}
+.habit strong {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 5px;
+}
+.habit button {
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+#summary {
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+/*# sourceMappingURL=style.css.map */
